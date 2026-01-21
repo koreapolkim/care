@@ -512,19 +512,19 @@
       border-top:1px solid var(--stroke);
       background: rgba(47,140,255,.08);
       color: rgba(31,36,48,.92);
-      font-size: calc(14px + var(--fontUp));
+      font-size: calc(15px + var(--fontUp));
       line-height:1.55;
     }
 
-/* 오답 피드백 영역을 진한 갈색으로 */
+/* 오답 피드백 영역을 진한 빨간색으로 */
 #quizOverlay .fb.isBad,
 #quizOverlay .fb.isBad .why{
-  color: #5A3A1E !important;
+  color: #B00020 !important;
 }
 
     .fb.show{display:block}
-    .fb .big{font-weight:1000;margin-bottom:6px;font-size: calc(15px + var(--fontUp))}
-.fb .big{font-weight:1000;margin-bottom:6px;font-size: calc(15px + var(--fontUp))}
+    .fb .big{font-weight:1000;margin-bottom:6px;font-size: calc(16px + var(--fontUp))}
+.fb .big{font-weight:1000;margin-bottom:6px;font-size: calc(16px + var(--fontUp))}
 
 /* 정답입니다 아래 내용 위로 붙이기 */
 #quizOverlay.oxMode .fb{
@@ -599,7 +599,7 @@
     /* ====== 퀴즈 피드백 아래 왜 ====== */
     .fb .why{
       margin-top:8px;
-      font-size: calc(13px + var(--fontUp));
+      font-size: calc(14px + var(--fontUp));
       color:rgba(31,36,48,.78);
       line-height:1.55;
       padding-top:10px;
@@ -613,7 +613,7 @@
 
 #quizOverlay .fb.blink3.isBad #fbBody .fbMainText,
 #quizOverlay .fb.blink3.isBad #fbBody .why{
-  animation: warnBlink3 .45s ease-in-out 0s 3;
+  animation: warnBlink3 .45s ease-in-out 0s 5;
 }
 
     .fb .why b{ font-weight:1000; }
@@ -795,7 +795,7 @@ padding:12px 14px;
       margin-bottom:6px;
     }
     .oxText{
-      font-size: calc(13px + var(--fontUp));
+      font-size: calc(14px + var(--fontUp));
       color: rgba(31,36,48,.92);
       line-height:1.5;
       word-break: keep-all;
@@ -1600,6 +1600,7 @@ const HOME_GUIDE_SLIDES = [
 const SOUND_NOTIFY_URL = "https://koreapolkim.github.io/p-m/in.mp3";
 const SOUND_RINGTONE_URL = "https://koreapolkim.github.io/p-m/mu.mp3";
 const SOUND_CALL_VOICE_URL = "";
+const SOUND_WARN_URL = "https://koreapolkim.github.io/sori/sa.mp3";
 
 /* === 안전지수와 마지막 결과 보기 === */
 const LS_LAST_SCORE = "polcare_last_score";
@@ -1700,7 +1701,7 @@ function easyText(str){
 
   const phrase = [
     [/급함·비밀·재촉은\s*멈춤\s*신호예요\.?/g, "지금 당장 하라고 재촉하거나 ‘비밀’이라 하면 사기(피싱)일 가능성이 커요!"],
-    [/급함\/링크\/인증\/송금 요구는\s*‘멈춤’\s*신호예요\.?/g, "재촉 + 주소(링크/URL) + 인증번호(OTP) + 돈 이야기가 나오면, 사기(피싱)일 가능성이 커요!"],
+    [/급함\/링크\/인증\/송금 요구는\s*‘멈춤’\s*신호예요\.?/g, "재촉 / 주소(링크, URL) / 인증번호(OTP) / 돈 이야기가 나오면, 사기(피싱)일 가능성이 커요!"],
     [/멈춤\s*→\s*공식\s*경로\s*확인/g, "멈추기 → 공식 채널로 다시 확인하기(검증)"],
     [/기존 번호·공식 채널로 재확인/g, "저장된 번호/공식 번호로 다시 전화해서 확인(콜백)"],
     [/링크 대신 공식 앱\/웹 직접 접속/g, "문자에 있는 주소(링크/URL)는 누르지 말고, 공식 앱/홈페이지를 직접 열기"],
@@ -1710,18 +1711,18 @@ function easyText(str){
   let out = s;
   for(const [re, rep] of phrase) out = out.replace(re, rep);
 
-  const word = [
-    [/보이스피싱/g, ""],
-    [/스미싱/g, ""],
-    [/피싱/g, ""],
-    [/\bOTP\b/g, ""],
-    [/URL/g, ""],
-    [/도메인/g, ""],
-    [/링크/g, ""],
-    [/콜백/g, ""],
-    [/검증/g, ""],
-  ];
-  for(const [re, rep] of word) out = out.replace(re, rep);
+    const word = [
+  [/보이스피싱(?!\))/g, "전화 사기(보이스피싱)"],
+  [/스미싱(?!\))/g, "문자 사기(스미싱)"],
+  [/피싱(?!\))/g, "사기(피싱)"],
+  [/\bOTP\b(?!\))/g, "인증번호(OTP)"],
+  [/URL(?!\))/g, "주소(URL)"],
+  [/도메인(?!\))/g, "주소(도메인)"],
+  [/(^|[^(])링크/g, "$1주소(링크)"],
+  [/콜백(?!\))/g, "다시 전화 확인(콜백)"],
+  [/검증(?!\))/g, "다시 확인(검증)"],
+];
+for(const [re, rep] of word) out = out.replace(re, rep);
 
   return out;
 }
@@ -1919,7 +1920,7 @@ function htmlWithBr(text){
 
 // 피드백
 function mergeFeedbackText(feedbackRaw, whyRaw){
-  return easyText(String(feedbackRaw || "")).trim();
+  return String(feedbackRaw || "").trim();
 }
 
 // 스미싱 설명
@@ -2121,7 +2122,7 @@ const OX_QUESTIONS = [
     suspectPoints:"• 010 발신 • ‘가압류’ 등 불이익 협박 • 기관명과 무관한 단축링크(도메인 불일치) • 오탈자/문장 어색함",
     messageHtml: `
       <div class="oxMsgCard">
-        <div class="oxMsgTop"><span class="oxMark" data-ox="sender">010-7788-9900</span></div>
+        <div class="oxMsgTop"><span class="oxMark" data-ox="sender">010-778XX-99XX</span></div>
         <div class="oxMsgBody">
           <div class="oxMsgBubble">
             <div class="oxWeb">[Web발신]</div>
@@ -2681,6 +2682,12 @@ qPromptEl.innerHTML = safeCoreHtml;
     qFeedback.classList.remove("blink3");
     void qFeedback.offsetWidth;
     qFeedback.classList.add("blink3");
+if(SOUND_WARN_URL && String(SOUND_WARN_URL).trim()){
+  const wa = playUrlAudio(SOUND_WARN_URL, {loop:false, volume:1}, run);
+  if(wa){
+    run?.setTimeout(()=>{ try{ wa.pause(); wa.currentTime=0; }catch(e){} }, 3000); // 3초 컷
+  }
+}
   }else{
     qFeedback.classList.remove("blink3");
   }
@@ -2798,6 +2805,12 @@ if(!good){
   qFeedback.classList.remove("blink3");
   void qFeedback.offsetWidth;  // 애니메이션 재시작 트릭
   qFeedback.classList.add("blink3");
+if(SOUND_WARN_URL && String(SOUND_WARN_URL).trim()){
+  const wa = playUrlAudio(SOUND_WARN_URL, {loop:false, volume:1}, run);
+  if(wa){
+    run?.setTimeout(()=>{ try{ wa.pause(); wa.currentTime=0; }catch(e){} }, 3000); // 3초 컷
+  }
+}
 }else{
   qFeedback.classList.remove("blink3");
 }
@@ -4505,7 +4518,7 @@ window.SCENARIOS.exp_m_family = {
          why:"시간 압박은 판단을 흐리게 만들어 ‘검증’을 못 하게 하려는 수법이에요.",
          vector:V(-2,0,0,-2,-2,-1), reply:"조심 좀 하지, 뭐 도와주면 돼?"}
       ]},
-    {type:"msg",from:"other",text:"지금 파손보험금 신청해야 하는데 임시폰이라 엄마 걸로 해야 해"},
+    {type:"msg",from:"other",text:"지금 파손보험금 신청해야 하는데 임시폰이라 엄마걸로 해야 해"},
     {type:"msg",from:"other",text:"옆에 사람들이 많아서 통화는 안되고 엄마 휴대폰으로 '확인'만 해주면 바로 끝나"},
     {type:"msg",from:"other",text:"엄마가 대신 ‘확인’만 해주면 바로 끝나. 딱 이것만!"},
     {type:"q",prompt:"‘통화는 안 되고, 카톡으로만’이라 고집하면?",
@@ -4967,7 +4980,7 @@ window.SCENARIOS.exp_c_post_card = {
 
 
 
-/* CASE 목록 Subtitle/Keywords/Summary 자동 들어가기
+/* CASE 목록 Subtitle/Keywords/Summary 자동 입력
      exp.listSubtitle, exp.listSummary, exp.listKeywords(Array), exp.introLines(Array)
 */
 (function syncCaseMetaFromScenarios(){
