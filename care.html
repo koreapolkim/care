@@ -1,3 +1,5 @@
+각 모든 체험별 피드백과 스미싱 알아보기의 의심포인트 포함 글씨체를 올릴려면 태그 중 어디를 수정해야 해?
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -73,7 +75,7 @@
 
     /* 경찰과 함께하는 체험 네이비 */
     .brandLight{
-      font-size: calc(15px + var(--fontUp)); /* +1pt 반영 */
+      font-size: calc(15px + var(--fontUp)); /* +1 */
       font-weight:900;
       color:rgba(11,43,91,.92);
       margin-left:12px;
@@ -512,7 +514,7 @@
       border-top:1px solid var(--stroke);
       background: rgba(47,140,255,.08);
       color: rgba(31,36,48,.92);
-      font-size: calc(15px + var(--fontUp));
+      font-size: calc(17px + var(--fontUp));
       line-height:1.55;
     }
 
@@ -609,6 +611,7 @@
 /* ====== 피드백 자동 줄바꿈 금지요 ====== */
 #quizOverlay .fbMainText,
 #quizOverlay .fb .why{
+font-size: calc(17px + var(--fontUp));
   white-space: pre;        
   overflow-x: auto;        
   -webkit-overflow-scrolling: touch;
@@ -3468,7 +3471,7 @@ function buildEasyExplainForCase(c){
     ? "이 수법은"
     : "이 수법은";
 
-  const baseNoticeTitle = `준비됐나요? 이제 ‘가짜 ${kind}’ 상황이 시작돼요`;
+  const baseNoticeTitle = `지금부터 ‘가짜 ${kind}’ 상황이 시작돼요`;
   const baseNoticeBody  = "모든 화면은 학습용입니다. 실제로 돈이 빠져나가거나 프로그램이 설치가 되지 않으니, 천천히 읽고 체험해보세요!";
 
   /* 시나리오 기반 설명 */
@@ -4481,7 +4484,7 @@ window.CASES = [
   { id:"case_self_hostage", title:"셀프 감금 협박", subtitle:"고립 지시 · 모텔/숙소 이동 · 약식명령/강제수사/영장집행 협박 · 통화유지 · ATM/현금화", category:"call", experienceId:"exp_c_self_hostage",
     info:{ victims:["전 연령<br>(불안에 취약한 사람)"], keywords:["고립 지시","모텔/숙소 이동","약식명령","강제수사","영장집행 협박","ATM/현금화"], summary:"수사기관을 사칭해 피해자를 ‘혼자 있는 곳’으로 이동시키고 통화유지를 강요하며, 협박으로 판단을 마비시킨 뒤 ATM 현금화·전달 등으로 금전을 편취하는 보이스피싱입니다." } },
 
-  { id:"case_loan_switch_call", title:"대출 빙자 사기", subtitle:"저금리 대환 · 앱 설치/원격조작 · 기존대출 상환/예치금/수수료 선입금 · ‘안전계좌’", category:"call", experienceId:"exp_c_loan_refi_rate",
+  { id:"case_loan_switch_call", title:"대출 빙자", subtitle:"저금리 대환 · 앱 설치/원격조작 · 기존대출 상환/예치금/수수료 선입금 · ‘안전계좌’", category:"call", experienceId:"exp_c_loan_refi_rate",
     info:{ victims:["전 연령<br>(금전 또는 금리 부담이 큰 사람)"], keywords:["저금리 전환","대환/갈아타기","앱 설치","원격조작","선입금(상환/예치금)","안전계좌"], summary:"저금리 대환을 미끼로 링크/앱 설치나 원격조작을 유도하고, 기존대출 상환금·예치금·수수료 등 선입금을 요구해 돈을 빼앗는 보이스피싱입니다." } },
 
   { id:"case_post_card_call", title:"카드 배송 사칭", subtitle:"카드 오배송/미신청 발급 · 가짜 고객센터 유도 · 링크/OTP · 악성앱/권한 요구", category:"call", experienceId:"exp_c_post_card",
@@ -4501,7 +4504,7 @@ window.SCENARIOS.exp_m_family = {
   ui:"kakao",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"가족사칭(카톡)",
-listSubtitle:"새 번호로 연락한 ‘자녀’의 통화는 피하고 인증·링크를 요구하면 사기입니다.",
+listSubtitle:"새 번호로 '자녀'라고하며 통화는 피하고 인증·링크를 요구하면 사기입니다.",
   introText: "새 번호로 연락와서 자녀를 사칭하고, 통화를 피하면서 링크 클릭과 인증번호를 유도하는 메신저 피싱입니다.",
   notify:{ title:"카톡", body:"‘자녀’에게서 메시지가 왔어요." },
   header:{ title:"저장되지 않은 번호", sub:"새 번호" },
@@ -4695,7 +4698,7 @@ listSubtitle:"단체예약이나 공공기관을 사칭하며 물품 대리구�
          vector:V(-2,0,0,-2,-2,-2)},
         {text:"죄송합니다 요새 사기가 많아서요,<br>예약금을 보내주셔야 예약이 가능할 것 같습니다", score:+20,
          feedback:"선결제 또는 물품 대리결제 요구는 노쇼 사기 가능성이 매우 높아요.\n정상 단체는 예약금이나 카드결제 등 공식 절차를 따릅니다.\n공식적으로 확인되기 전까지 물품 대리구매나 입금은 하지 마세요.",
-         why:"진짜 고객이면 예약금 입금 또는 정상 결제 절차를 따를 거예요.",
+         why:"정상 고객이면 예약금 입금 또는 정상 결제 절차를 따를 거예요.",
          vector:V(+2,0,0,+2,+2,+2)}
       ]
     },
@@ -4707,7 +4710,7 @@ window.SCENARIOS.exp_c_investigation = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"수사기관 사칭(보이스피싱)",
-listSubtitle:"검찰·경찰을 사칭해 범죄 연루를 겁주고 현금 인출 요구와 전달을 시키면 사기입니다.",
+listSubtitle:"검찰·경찰을 사칭해 범죄 연루로 겁주고 현금 인출 요구와 전달을 시키면 사기입니다.",
   introText: "검찰·경찰 등을 사칭해 ‘범죄 연루’로 겁을 준 뒤 예금 보호를 해야한다며, 현금 인출 또는 수거책 전달로 금전을 빼앗는 보이스피싱입니다.",
   incoming:{ name:"서울중앙지방검찰청", number:"02-23XX-3X51" },
   voiceUrl: "https://koreapolkim.github.io/vo/gum2.mp3",
@@ -4755,7 +4758,7 @@ listSubtitle:"검찰·경찰을 사칭해 범죄 연루를 겁주고 현금 인�
       ]
     },
 {
-      core:"지금 안하시면, 모든 돈이 동결돼서<br>계좌 사용이 어려울겁니다",
+      core:"지금 안하시면, 모든 돈이 동결돼서<br>계좌 사용이 어려울겁니다.",
       choices:[
         {text:"네, 지금 당장 인출하러 가겠습니다", score:-20,
          feedback:"‘지금 안 하면 동결’ 같은 압박은 조종 수법입니다.\n급하게 움직이게 만들어 검증을 못 하게 해요.",
@@ -4859,7 +4862,7 @@ window.SCENARIOS.exp_c_loan_refi_rate = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"대출 저금리 전환(보이스피싱)",
-listSubtitle:"저금리 전환을 미끼로 앱 설치·선입금 등을 요구하면 대출 사기를 의심하세요.",
+listSubtitle:"대출 저금리(전환) 미끼로 앱 설치·선입금 등을 요구하면 대출 사기를 의심하세요.",
   introText: "금융회사를 사칭해 저금리 대환을 미끼로 링크 및 앱 설치를 유도하고, 기존대출 상환금·예치금·수수료 등 선입금을 요구해 금전을 편취하는 보이스피싱입니다.",
   incoming:{ name:"OO저축은행 상담센터", number:"02-77XX-3X98" },
   voiceUrl: "https://koreapolkim.github.io/vv/dae.mp3",
@@ -4972,7 +4975,7 @@ listSubtitle:"신청하지 않은 카드 배송이라며 ‘사고예방팀’ �
          why:"사기범은 원격/접근성 권한으로 문자 인증/금융앱 조작을 시도할 수 있어요. ‘대신 해준다’는 말이 특히 위험합니다.",
          vector:V(-2,-2,-2,-2,-2,-2)},
         {text:"OO카드회사 대표전화로 해볼게요.", score:+20,
-         feedback:"카드 관련은 내가 직접 공식 번호로 확인이 가장 안전해요.\n발신자 말대로 움직이면 가짜 고객센터로 연결될 수 있어요",
+         feedback:"카드 관련은 내가 직접 공식 번호로 확인이 가장 안전해요.\n발신자 말대로 움직이면 가짜 고객센터로 연결될 수 있어요.",
          why:"공식기관은 전화로 원격앱 설치를 요구하지 않습니다. 끊고 공식 앱/대표번호로 확인하는 것이 안전합니다.",
          vector:V(+2,+2,+2,+2,+2,+2)}
       ]
@@ -5034,3 +5037,4 @@ listSubtitle:"신청하지 않은 카드 배송이라며 ‘사고예방팀’ �
 </script>
 </body>
 </html>
+
