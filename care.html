@@ -606,6 +606,15 @@
       border-top:1px dashed rgba(31,36,48,.18);
     }
 
+/* ====== 피드백 자동 줄바꿈 금지요 ====== */
+#quizOverlay .fbMainText,
+#quizOverlay .fb .why{
+  white-space: pre;        
+  overflow-x: auto;        
+  -webkit-overflow-scrolling: touch;
+  word-break: normal;
+}
+
 @keyframes warnBlink3 {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.15; }
@@ -1436,7 +1445,7 @@ padding:12px 14px;
 
   .homeSegMarker{ display:none !important; }
 
-  #promoVideoMenu, #creditsmenu, #creditsMenu { display:none !important; }
+  #promoVideoMenu { display:none !important; }
 </style>
 
 </head>
@@ -4492,6 +4501,7 @@ window.SCENARIOS.exp_m_family = {
   ui:"kakao",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"가족사칭(카톡)",
+listSubtitle:"새 번호로 연락한 ‘자녀’의 통화는 피하고 인증·링크를 요구하면 사기입니다.",
   introText: "새 번호로 연락와서 자녀를 사칭하고, 통화를 피하면서 링크 클릭과 인증번호를 유도하는 메신저 피싱입니다.",
   notify:{ title:"카톡", body:"‘자녀’에게서 메시지가 왔어요." },
   header:{ title:"저장되지 않은 번호", sub:"새 번호" },
@@ -4628,6 +4638,7 @@ window.SCENARIOS.exp_c_noshow = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"노쇼(보이스피싱)",
+listSubtitle:"단체예약이나 공공기관을 사칭하며 물품 대리구매·선송금을 요구하면 다시 한번 확인하세요.",
   introText: "단체예약이나 공공기관을 사칭, ‘취급하지 않는 고가 물품을 대신 구매해달라’며 선송금 유도로 금전을 편취하는 수법입니다.",
   incoming:{ name:"OO시청 주무관 ", number:"010-83XX-01X8" },
   voiceUrl: "https://koreapolkim.github.io/vv/no.mp3",
@@ -4696,6 +4707,7 @@ window.SCENARIOS.exp_c_investigation = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"수사기관 사칭(보이스피싱)",
+listSubtitle:"검찰·경찰을 사칭해 범죄 연루를 겁주고 현금 인출 요구와 전달을 시키면 사기입니다.",
   introText: "검찰·경찰 등을 사칭해 ‘범죄 연루’로 겁을 준 뒤 예금 보호를 해야한다며, 현금 인출 또는 수거책 전달로 금전을 빼앗는 보이스피싱입니다.",
   incoming:{ name:"서울중앙지방검찰청", number:"02-23XX-3X51" },
   voiceUrl: "https://koreapolkim.github.io/vo/gum2.mp3",
@@ -4777,6 +4789,7 @@ window.SCENARIOS.exp_c_self_hostage = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"셀프 감금 협박(보이스피싱)",
+listSubtitle:"협박으로 혼자 있게 만들고 통화 유지와 이동을 강요하면 즉시 끊고 신고하세요.",
   introText: "수사기관을 사칭해 피해자를 ‘혼자 있는 곳’으로 이동시키고 통화유지를 강요하며, 협박으로 판단을 마비시킨 뒤 금전을 편취하는 보이스피싱입니다.",
   incoming:{ name:"서울중앙지방검찰청", number:"02-98XX-7X68" },
   voiceUrl: "https://koreapolkim.github.io/voc/self2.mp3",
@@ -4846,6 +4859,7 @@ window.SCENARIOS.exp_c_loan_refi_rate = {
   type:"call",
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   title:"대출 저금리 전환(보이스피싱)",
+listSubtitle:"저금리 전환을 미끼로 앱 설치·선입금 등을 요구하면 대출 사기를 의심하세요.",
   introText: "금융회사를 사칭해 저금리 대환을 미끼로 링크 및 앱 설치를 유도하고, 기존대출 상환금·예치금·수수료 등 선입금을 요구해 금전을 편취하는 보이스피싱입니다.",
   incoming:{ name:"OO저축은행 상담센터", number:"02-77XX-3X98" },
   voiceUrl: "https://koreapolkim.github.io/vv/dae.mp3",
@@ -4916,6 +4930,7 @@ window.SCENARIOS.exp_c_post_card = {
   speedMs: window.DIALOG_FLOW_SPEED_MS,
   voiceUrl: "https://koreapolkim.github.io/voi/card2.mp3",
   title:"카드 배송(보이스피싱)",
+listSubtitle:"신청하지 않은 카드 배송이라며 ‘사고예방팀’ 연결을 유도하면 사기 가능성이 큽니다.",
   introText: "신청하지 않은 카드배송을 사칭해 불안 조성과 가짜 사고예방팀 안내로 금융 피해를 유발하는 보이스피싱입니다.",
   incoming:{ name:"카드배송 기사", number:"010-98XX-07X2" },
   keyPoints:[
@@ -4927,7 +4942,7 @@ window.SCENARIOS.exp_c_post_card = {
       core:"카드배송기사인데요,<br>고객님 명의 발급 카드<br>배송해드릴려고하는데 댁에 계시나요?",
       choices:[
         {text:"네, 제가 집 근처라 곧 도착해요", score:-20,
-         feedback:"먼저 실제 본인 명의 카드를 발급한 적이 있는지 카드회사 공식번호로 확인하세요.\n발급받은 적이 없다면  ‘카드 배송’으로 시작해 바로 처리하게 만드는 건 보이스피싱 흐름일 수 있어요.",
+         feedback:"카드를 발급한 적이 있는지 카드회사 공식번호로 확인하세요.\n발급받은 적이 없다면 보이스피싱 흐름일 수 있어요.",
          why:"사기범은 ‘지금 여기서 해결’하게 만들어 공식 확인(콜백)을 못 하게 합니다.",
          vector:V(-2,0,0,-2,-1,-2)},
         {text:"카드를 신청한적이 없는데요", score:+20,
@@ -5019,4 +5034,3 @@ window.SCENARIOS.exp_c_post_card = {
 </script>
 </body>
 </html>
-
